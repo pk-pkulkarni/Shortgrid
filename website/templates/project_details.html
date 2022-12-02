@@ -1,0 +1,59 @@
+{% extends "base.html" %} {% block title %} {{ data.name }} - Shots{% endblock %}
+{% block content %}
+    <h3 align="center">{{ data.name }}</h3>
+
+    <table id="shots" class="table align-middle mb-0 bg-white">
+        <thead class="bg-light">
+        <tr>
+            <th>Short Code</th>
+            <th>Sequence</th>
+            <th>Cut In</th>
+            <th>Cut Out</th>
+            <th>Cut Duration</th>
+            <th>Details</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for shot in data.shots %}
+            <tr>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <div class="ms-3">
+                            <p class="fw-bold mb-1">{{ shot['code'] }}</p>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <p class="fw-normal mb-1">{{ shot['sg_sequence']['name'] }}</p>
+                </td>
+                <td>
+                    <p class="fw-normal mb-1">{{ shot['sg_cut_in'] }}</p>
+                </td>
+                <td>
+                    <p class="fw-normal mb-1">{{ shot['sg_cut_out'] }}</p>
+                </td>
+                <td>
+                    <p class="fw-normal mb-1">{{ shot['sg_cut_duration'] }}</p>
+                </td>
+                <td>
+                    <a class="btn-link" href="/shot/{{ shot['id'] }}" style="cursor: pointer"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+
+{% block scripts %}
+    <!-- Custom Scripts -->
+    <script>
+        $(document).ready(function () {
+            $('#shots').DataTable({
+                dom: "<'row'<'col-sm-4'l><'col-sm-4'i><'col-4'f>>" + "<'row'<'col-12'tr>>" + "<'row'<'col-4'><'col-4'><'col-4'p>>",
+                lengthMenu:     [[10, 20, 50, -1], [10, 20, 50, "All"]],
+                pagingType: 'full_numbers',
+            });
+        });
+    </script>
+{% endblock %}
